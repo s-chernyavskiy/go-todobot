@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS tasks
+(
+    task_id SERIAL PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    name TEXT NOT NULL
+);

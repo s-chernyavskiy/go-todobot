@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package todobot;
+
+option go_package = "s-chernyavskiy.todobot.v1;todobotv1";
+
+service TelegramService {
+  rpc GetUpdates(GetUpdatesRequest) returns (GetUpdatesResponse);
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
+}
+
+message GetUpdatesRequest {
+  int32 offset = 1;
+  int32 limit = 2;
+}
+
+message GetUpdatesResponse {
+  repeated Update updates = 1;
+}
+
+message Update {
+  int32 update_id = 1;
+  string message = 2;
+}
+
+message SendMessageRequest {
+  int32 chat_id = 1;
+  string text = 2;
+}
+
+message SendMessageResponse {
+  string status = 1;
+}
