@@ -10,6 +10,7 @@ import (
 	"go-todobot/internal/storage"
 	"go-todobot/internal/telegram"
 	"go-todobot/lib/e"
+	"log"
 )
 
 type Processor struct {
@@ -89,8 +90,10 @@ func (p *Processor) processMessage(event events.Event) error {
 
 	err = p.w.WriteMessages(context.Background(), kafka.Message{Value: m})
 	if err != nil {
+		log.Printf("Failed to write message to Kafka: %v", err)
 		return err
 	}
+	log.Println("Successfully wrote message to Kafka")
 
 	return nil
 }

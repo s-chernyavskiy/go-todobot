@@ -5,6 +5,7 @@ import (
 	"go-todobot/internal/domain/models"
 	"go-todobot/lib/e"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"path"
@@ -50,6 +51,7 @@ func (c *Client) Updates(offset, limit int) ([]models.Update, error) {
 
 func (c *Client) SendMessage(chatID int, text string) error {
 	q := url.Values{}
+	log.Println("sending message:", text, chatID)
 	q.Add("chat_id", strconv.Itoa(chatID))
 	q.Add("text", text)
 
@@ -67,6 +69,7 @@ func newBasePath(token string) string {
 
 func (c *Client) doRequest(method string, query url.Values) (data []byte, err error) {
 	defer func() { err = e.NilWrap("failed to do request", err) }()
+	log.Println("method and query:", method, query)
 
 	u := url.URL{
 		Scheme: "https",

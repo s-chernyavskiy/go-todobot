@@ -23,7 +23,7 @@ func main() {
 	}
 
 	kafkaProducer := kafka.NewProducer(tgClient, postgresql.New(conn), []string{c.Kafka.Brokers}, c.Kafka.Topic)
-	kafkaConsumer := kafka.NewConsumer([]string{c.Kafka.Brokers}, c.Kafka.Topic, c.Kafka.GroupID)
+	kafkaConsumer := kafka.NewConsumer([]string{c.Kafka.Brokers}, c.Kafka.Topic, c.Kafka.GroupID, tgClient)
 
 	consumer := event.New(kafkaProducer, kafkaConsumer, c.BatchSize)
 

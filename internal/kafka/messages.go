@@ -16,3 +16,7 @@ const (
 	msgNoTaskFound     = `No task found!`
 	msgTaskDoesntExist = "Task doesnt exist!"
 )
+
+func (c *Consumer) sendHello(chatID int) error {
+	return c.tg.SendMessage(chatID, msgHello)
+}
