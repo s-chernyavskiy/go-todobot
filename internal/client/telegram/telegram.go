@@ -64,8 +64,6 @@ func (p *Processor) Process(event events.Event) error {
 
 func (p *Processor) processMessage(event events.Event) error {
 	meta, err := meta(event)
-	// {1 xxsd map[ChatID:430746829 Username:jugglyyfe]}
-	// {1 asd {430746829 jugglyyfe}}
 
 	if err != nil {
 		return e.Wrap("cant process message", err)

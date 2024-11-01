@@ -1,8 +1,9 @@
 package event
 
 import (
+	"fmt"
 	"go-todobot/internal/domain/events"
-	"log"
+	"log/slog"
 	"time"
 )
 
@@ -21,16 +22,16 @@ func New(fetcher events.Fetcher, processor events.Processor, batchSize int) *Con
 }
 
 func (c *Consumer) Start() error {
-	log.Println("Starting consumer...")
+	slog.Info("Starting consumer...")
 	for {
 		event, err := c.fetcher.Fetch(c.batchSize)
 		if err != nil {
-			log.Printf("consumer error: %v", err.Error())
+			slog.Error("consumer error:", err.Error())
 
 			continue
 		}
 
-		log.Printf("Fetched %d events", len(event))
+		slog.Info(fmt.Sprintf("Fetched %d events: ", len(event)))
 
 		if len(event) == 0 {
 			time.Sleep(1 * time.Second)
@@ -39,7 +40,7 @@ func (c *Consumer) Start() error {
 		}
 
 		if err := c.handleEvents(event); err != nil {
-			log.Print(err)
+			slog.Error("failed to handle events: ", err)
 
 			continue
 		}
@@ -47,13 +48,13 @@ func (c *Consumer) Start() error {
 }
 
 func (c *Consumer) handleEvents(events []events.Event) error {
-	log.Println("handling events...")
+	slog.Info("handling events...")
 
 	for _, event := range events {
-		log.Printf("got event: %v", event.Text)
+		slog.Info("got event:", event.Text)
 
 		if err := c.processor.Process(event); err != nil {
-			log.Printf("cant handle event: %v", err.Error())
+			slog.Error("cant handle event:", err.Error())
 
 			continue
 		}
