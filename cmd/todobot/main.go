@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	telegram2 "go-todobot/internal/client/telegram"
 	"go-todobot/internal/config"
 	"go-todobot/internal/consumer/event"
-	"go-todobot/internal/kafka"
 	"go-todobot/internal/storage/postgresql"
 	"go-todobot/internal/telegram"
 	"log"
@@ -21,17 +21,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	db := postgresql.New(conn)
 
-	kafkaProducer := kafka.NewProducer(tgClient, postgresql.New(conn), []string{c.Kafka.Brokers}, c.Kafka.Topic)
-	kafkaConsumer := kafka.NewConsumer([]string{c.Kafka.Brokers}, c.Kafka.Topic, c.Kafka.GroupID)
+	processor := telegram2.New(tgClient, db)
 
-	consumer := event.New(kafkaProducer, kafkaConsumer, c.BatchSize)
+	consumer := event.New(processor, processor, c.BatchSize)
 
 	if err := consumer.Start(); err != nil {
 		log.Fatal("consumer stopped: ", err)
-	}
-
-	if err := kafkaConsumer.Close(); err != nil {
-		log.Fatal("Error closing Kafka reader: ", err)
 	}
 }
