@@ -1,0 +1,5 @@
+env: "local"
+token: "YOUR API_KEY HERE"
+tgBotHost: "api.telegram.org"
+batchSize: 100
+databaseURL: "postgres://postgres@localhost"

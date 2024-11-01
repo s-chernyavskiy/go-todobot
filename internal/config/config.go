@@ -8,18 +8,11 @@ import (
 )
 
 type Config struct {
-	Env         string      `yaml:"env" env-default:"local"`
-	Token       string      `yaml:"token"`
-	TgBotHost   string      `yaml:"tgBotHost"`
-	BatchSize   int         `yaml:"batchSize"`
-	DatabaseURL string      `yaml:"databaseURL"`
-	Kafka       KafkaConfig `yaml:"kafka"`
-}
-
-type KafkaConfig struct {
-	Brokers string `yaml:"brokers"`
-	Topic   string `yaml:"topic"`
-	GroupID string `yaml:"groupID"`
+	Env         string `yaml:"env" env-default:"local"`
+	Token       string `yaml:"token"`
+	TgBotHost   string `yaml:"tgBotHost"`
+	BatchSize   int    `yaml:"batchSize"`
+	DatabaseURL string `yaml:"databaseURL"`
 }
 
 func MustLoad() *Config {
