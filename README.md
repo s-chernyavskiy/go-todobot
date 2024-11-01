@@ -4,3 +4,4 @@
 - [ ] add docs
 - [ ] implement timestamp (to do before *time*)
 - [ ] replace removing task with listing it as completed
+- [ ] limit debug tracing with config env level
