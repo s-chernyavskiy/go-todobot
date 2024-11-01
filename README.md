@@ -1,5 +1,5 @@
 # TODO
-- [ ] use Docker compose instead of Makefile
+- [x] use Docker compose instead of Makefile
 - [ ] add kafka
 - [ ] add docs
 - [ ] implement timestamp (to do before *time*)
